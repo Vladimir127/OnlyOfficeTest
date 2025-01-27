@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/documentsFragment"
+        android:icon="@drawable/baseline_description_black_24"
+        android:menuCategory="secondary"
+        android:title="@string/documents" />
+
+    <item
+        android:id="@+id/roomsFragment"
+        android:icon="@drawable/baseline_dataset_black_24"
+        android:menuCategory="secondary"
+        android:title="@string/rooms" />
+
+    <item
+        android:id="@+id/trashFragment"
+        android:icon="@drawable/baseline_delete_black_24"
+        android:menuCategory="secondary"
+        android:title="@string/trash" />
+
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/baseline_person_black_24"
+        android:menuCategory="secondary"
+        android:title="@string/profile" />
+
+</menu>
