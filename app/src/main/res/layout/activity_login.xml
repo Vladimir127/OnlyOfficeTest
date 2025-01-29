@@ -5,22 +5,22 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_vertical"
     android:orientation="vertical"
-    tools:context=".presentation.login.LoginActivity"
-    android:gravity="center_vertical">
+    tools:context=".presentation.login.LoginActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_default"
         android:layout_marginEnd="@dimen/margin_default"
+        android:layout_marginBottom="@dimen/margin_double"
         android:text="@string/connect_to_onlyoffice"
         android:textAlignment="center"
-        android:textSize="@dimen/title1"
-        android:layout_marginBottom="@dimen/margin_double"/>
+        android:textSize="@dimen/title1" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutPortal"
+        android:id="@+id/portal_layout"
         style="@style/TextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,11 +28,12 @@
         app:startIconDrawable="@drawable/baseline_dataset_black_24">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextPortal"
+            android:id="@+id/portal_edit_text"
             style="@style/TextInputEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Sample Portal"/>
+            android:inputType="textUri"
+            android:text="https://testdocspaceportal.onlyoffice.com/" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -49,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            tools:text="example@example.com" />
+            android:text="1one.test901@gmail.com" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -57,9 +58,9 @@
         style="@style/TextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_default"
         android:hint="@string/password"
-        app:startIconDrawable="@drawable/baseline_lock_black_24"
-        android:layout_marginBottom="@dimen/margin_double">
+        app:startIconDrawable="@drawable/baseline_lock_black_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password_edit_text"
@@ -67,14 +68,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            tools:text="password" />
+            android:text="Testpass123" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/error_text_view"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_default"
-        android:layout_marginEnd="@dimen/margin_default"
-        android:text="@string/login"/>
+        android:text="@string/error"
+        android:textColor="@color/red"
+        android:textSize="16sp"
+        android:layout_marginBottom="@dimen/margin_default"
+        android:layout_gravity="center"
+        android:visibility="invisible"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:text="@string/login" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:layout_gravity="center"/>
+    </FrameLayout>
 
 </LinearLayout>
