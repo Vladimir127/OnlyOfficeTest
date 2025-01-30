@@ -34,4 +34,18 @@ interface UserDataRepository {
      * @param value Признак того, авторизован ли пользователь с помощью токена аутентификации
      */
     fun saveAuthorizedWithToken(value: Boolean)
+
+    /**
+     * Сохраняет адрес портала (базовый URL для Retrofit)
+     *
+     * @param baseUrl Базовый URL для сохранения
+     */
+    fun saveBaseUrl(baseUrl: String)
+
+    /**
+     * Возвращает адрес портала (базовый URL для Retrofit)
+     *
+     * @return Базовый URL
+     */
+    fun getBaseUrl(): String
 }

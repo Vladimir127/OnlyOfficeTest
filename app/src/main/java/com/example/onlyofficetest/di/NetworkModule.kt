@@ -1,12 +1,18 @@
 package com.example.onlyofficetest.di
 
+import android.content.Context
 import com.example.onlyofficetest.data.repositories.WebRemoteRepositoryImpl
+import com.example.onlyofficetest.data.retrofit.AuthInterceptor
+import com.example.onlyofficetest.data.retrofit.BaseUrlProvider
 import com.example.onlyofficetest.data.retrofit.PortalService
+import com.example.onlyofficetest.data.retrofit.TokenProvider
 import com.example.onlyofficetest.domain.repositories.RemoteRepository
+import com.example.onlyofficetest.domain.repositories.UserDataRepository
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -22,10 +28,27 @@ class NetworkModule {
     }
 
     @Provides
-    fun provideRetrofit(gson: Gson): Retrofit {
+    fun provideTokenProvider(userDataRepository: UserDataRepository): TokenProvider {
+        return TokenProvider(userDataRepository)
+    }
+
+    @Provides
+    fun provideOkHttpClient(
+        tokenProvider: TokenProvider
+    ): OkHttpClient {
+        val authInterceptor = AuthInterceptor(tokenProvider)
+
+        return OkHttpClient.Builder()
+            .addInterceptor(authInterceptor)
+            .build()
+    }
+
+    @Provides
+    fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
+            .client(okHttpClient)
             .build()
     }
 
@@ -35,7 +58,12 @@ class NetworkModule {
     }
 
     @Provides
-    fun provideRemoteRepository(apiService: PortalService): RemoteRepository {
-        return WebRemoteRepositoryImpl(apiService)
+    fun provideBaseUrlProvider(userDataRepository: UserDataRepository): BaseUrlProvider {
+        return BaseUrlProvider(userDataRepository)
+    }
+
+    @Provides
+    fun provideRemoteRepository(apiService: PortalService, baseUrlProvider: BaseUrlProvider): RemoteRepository {
+        return WebRemoteRepositoryImpl(apiService, baseUrlProvider)
     }
 }

@@ -43,11 +43,24 @@ class SharedPrefsUserDataRepositoryImpl(private val sharedPreferences: SharedPre
         editor.apply()
     }
 
+    override fun saveBaseUrl(baseUrl: String) {
+        val editor = sharedPreferences.edit()
+        editor.putString(TAG_BASE_URL, baseUrl)
+        editor.apply()
+    }
+
+    override fun getBaseUrl(): String {
+        return sharedPreferences.getString(TAG_BASE_URL, "") ?: ""
+    }
+
     companion object {
         /** Ключ для чтения и записи значения в методах [getAccessToken] и [saveAccessToken] */
         const val TAG_ACCESS_TOKEN = "access_token"
 
         /** Ключ для чтения и записи значения в методах [getAuthorizedWithToken] и [saveAuthorizedWithToken] */
         const val AUTH_WITH_TOKEN = "auth_with_token"
+
+        /** Ключ для чтения и записи значения в методах [getBaseUrl] и [saveBaseUrl] */
+        const val TAG_BASE_URL = "base_url"
     }
 }

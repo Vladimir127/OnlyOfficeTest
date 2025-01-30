@@ -5,6 +5,6 @@ package com.example.onlyofficetest.domain.models
  *
  * @property token Токен авторизации
  */
-data class TokenResponse(
+data class InnerAuthorizationResponse(
     val token: String
 )

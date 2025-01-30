@@ -3,12 +3,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.main.ProfileFragment">
+    tools:context=".presentation.main.profile.ProfileFragment">
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/data_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/profile"
-        android:gravity="center" />
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible">
 
+        <ImageView
+            android:id="@+id/avatar_image_view"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginBottom="@dimen/margin_double" />
+
+        <TextView
+            android:id="@+id/user_name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_double"
+            android:text="@string/user_name"
+            android:textSize="@dimen/title1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email"
+            android:textSize="@dimen/title" />
+
+        <TextView
+            android:id="@+id/email_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_double"
+            android:textSize="@dimen/title"
+            tools:text="example@example.com" />
+
+        <Button
+            android:id="@+id/logout_button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/logout" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/loading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/error_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/error"
+            android:textSize="@dimen/title"
+            android:layout_marginBottom="@dimen/margin_default"/>
+
+        <Button
+            android:id="@+id/try_again_button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/try_again" />
+    </LinearLayout>
 </FrameLayout>

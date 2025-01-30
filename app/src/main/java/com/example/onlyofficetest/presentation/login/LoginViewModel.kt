@@ -69,8 +69,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
      */
     fun checkIfIsAuthorized() {
         viewModelScope.launch {
-            val token = userDataRepository.getAccessToken()
-            val isAuthorized = token.isNotEmpty()
+            val isAuthorized = userDataRepository.getAuthorizedWithToken()
             _isAuthorized.value = isAuthorized
         }
     }

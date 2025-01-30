@@ -61,4 +61,8 @@ dependencies {
     // Dagger
     implementation(libs.dagger)
     kapt (libs.dagger.compiler)
+
+    // Glide
+    implementation (libs.glide)
+    kapt(libs.compiler)
 }
