@@ -1,4 +1,4 @@
-package com.example.onlyofficetest.presentation.main.rooms
+package com.example.onlyofficetest.presentation.main.trash
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,43 +7,43 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.onlyofficetest.databinding.FragmentRoomsBinding
+import com.example.onlyofficetest.databinding.FragmentTrashBinding
 import com.example.onlyofficetest.domain.models.FileListItem
 import com.example.onlyofficetest.presentation.main.common.FileAdapter
 
-class RoomsFragment : Fragment() {
-    private var _binding: FragmentRoomsBinding? = null
+class TrashFragment : Fragment() {
+    private var _binding: FragmentTrashBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: RoomsViewModel
+    private lateinit var viewModel: TrashViewModel
     private lateinit var fileAdapter: FileAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentRoomsBinding.inflate(inflater, container, false)
+        _binding = FragmentTrashBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this@RoomsFragment)[RoomsViewModel::class.java]
+        viewModel = ViewModelProvider(this@TrashFragment)[TrashViewModel::class.java]
 
         fileAdapter = FileAdapter(requireContext())
         binding.recyclerView.adapter = fileAdapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.rooms.observe(viewLifecycleOwner) { rooms ->
-            showData(rooms)
+        viewModel.trash.observe(viewLifecycleOwner) { trash ->
+            showData(trash)
         }
         viewModel.error.observe(viewLifecycleOwner) {
             showError()
         }
 
         showLoading()
-        viewModel.loadRooms()
+        viewModel.loadTrash()
     }
 
     private fun showLoading() {
@@ -67,7 +67,7 @@ class RoomsFragment : Fragment() {
 
         binding.tryAgainButton.setOnClickListener {
             showLoading()
-            viewModel.loadRooms()
+            viewModel.loadTrash()
         }
     }
 

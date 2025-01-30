@@ -2,7 +2,6 @@ package com.example.onlyofficetest.domain.repositories
 
 import com.example.onlyofficetest.domain.models.AuthorizationResponse
 import com.example.onlyofficetest.domain.models.FileListItem
-import com.example.onlyofficetest.domain.models.FilesResponse
 import com.example.onlyofficetest.domain.models.UserProfile
 
 interface RemoteRepository {
@@ -10,11 +9,11 @@ interface RemoteRepository {
 
     suspend fun getProfileData(): UserProfile
 
-    suspend fun getDocuments(): FilesResponse
+    suspend fun getDocuments(): List<FileListItem>
 
     suspend fun getRooms(): List<FileListItem>
 
-    suspend fun getTrash(): FilesResponse
+    suspend fun getTrash(): List<FileListItem>
 
     suspend fun logout()
 }

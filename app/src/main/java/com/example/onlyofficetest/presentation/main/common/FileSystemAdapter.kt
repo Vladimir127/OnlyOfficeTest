@@ -1,4 +1,4 @@
-package com.example.onlyofficetest.presentation.main.rooms
+package com.example.onlyofficetest.presentation.main.common
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,12 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.onlyofficetest.R
 import com.example.onlyofficetest.databinding.ListItemBinding
 import com.example.onlyofficetest.domain.models.FileListItem
+import com.example.onlyofficetest.domain.models.Folder
 
 /**
  * Адаптер для списка файлов и папок. Используется в разделах "Documents", "Rooms" и "Trash"
  */
 class FileAdapter(val context: Context) :
     RecyclerView.Adapter<FileAdapter.FileViewHolder>() {
+
     var onItemClickListener: ((String) -> Unit)? = null
 
     private var items: List<FileListItem> = emptyList()
@@ -50,10 +52,18 @@ class FileAdapter(val context: Context) :
             }
         }
 
-        fun bind(product: FileListItem) {
-            this.fileListItem = product
+        fun bind(item: FileListItem) {
+            this.fileListItem = item
 
-            binding.titleTextView.text = product.title
+            binding.titleTextView.text = item.title
+
+            val imageResource = if (item is Folder) {
+                R.drawable.baseline_folder_open_white_24
+            } else {
+                R.drawable.baseline_description_24
+            }
+
+            binding.iconImageView.setImageResource(imageResource)
         }
     }
 }

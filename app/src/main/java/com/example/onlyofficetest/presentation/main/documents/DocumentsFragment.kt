@@ -1,41 +1,41 @@
-package com.example.onlyofficetest.presentation.main.rooms
+package com.example.onlyofficetest.presentation.main.documents
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.onlyofficetest.databinding.FragmentRoomsBinding
+import com.example.onlyofficetest.databinding.FragmentDocumentsBinding
 import com.example.onlyofficetest.domain.models.FileListItem
 import com.example.onlyofficetest.presentation.main.common.FileAdapter
 
-class RoomsFragment : Fragment() {
-    private var _binding: FragmentRoomsBinding? = null
+class DocumentsFragment : Fragment() {
+    private var _binding: FragmentDocumentsBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: RoomsViewModel
+    private lateinit var viewModel: DocumentsViewModel
     private lateinit var fileAdapter: FileAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentRoomsBinding.inflate(inflater, container, false)
+        _binding = FragmentDocumentsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this@RoomsFragment)[RoomsViewModel::class.java]
+        viewModel = ViewModelProvider(this@DocumentsFragment)[DocumentsViewModel::class.java]
 
         fileAdapter = FileAdapter(requireContext())
         binding.recyclerView.adapter = fileAdapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.rooms.observe(viewLifecycleOwner) { rooms ->
+        viewModel.documents.observe(viewLifecycleOwner) { rooms ->
             showData(rooms)
         }
         viewModel.error.observe(viewLifecycleOwner) {
@@ -43,7 +43,8 @@ class RoomsFragment : Fragment() {
         }
 
         showLoading()
-        viewModel.loadRooms()
+        viewModel.loadDocuments()
+
     }
 
     private fun showLoading() {
@@ -67,7 +68,7 @@ class RoomsFragment : Fragment() {
 
         binding.tryAgainButton.setOnClickListener {
             showLoading()
-            viewModel.loadRooms()
+            viewModel.loadDocuments()
         }
     }
 

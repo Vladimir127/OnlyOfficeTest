@@ -1,4 +1,4 @@
-package com.example.onlyofficetest.presentation.main.rooms
+package com.example.onlyofficetest.presentation.main.documents
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -11,7 +11,7 @@ import com.example.onlyofficetest.infrastructure.MyApp
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class RoomsViewModel(application: Application) : AndroidViewModel(application) {
+class DocumentsViewModel(application: Application) : AndroidViewModel(application) {
     @Inject
     lateinit var remoteRepository: RemoteRepository
 
@@ -19,17 +19,17 @@ class RoomsViewModel(application: Application) : AndroidViewModel(application) {
         (application as MyApp).appComponent.inject(this)
     }
 
-    private val _rooms: MutableLiveData<List<FileListItem>> = MutableLiveData()
-    val rooms: LiveData<List<FileListItem>> = _rooms
+    private val _documents: MutableLiveData<List<FileListItem>> = MutableLiveData()
+    val documents: LiveData<List<FileListItem>> = _documents
 
     private val _error: MutableLiveData<Throwable> = MutableLiveData()
     val error: LiveData<Throwable> = _error
 
-    fun loadRooms() {
+    fun loadDocuments() {
         viewModelScope.launch {
             try {
-                val rooms = remoteRepository.getRooms()
-                _rooms.value = rooms
+                val documents = remoteRepository.getDocuments()
+                _documents.value = documents
             } catch (e: Exception) {
                 e.printStackTrace()
                 _error.value = e

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/documentsFragment"
-        android:name="com.example.onlyofficetest.presentation.main.DocumentsFragment"
+        android:name="com.example.onlyofficetest.presentation.main.documents.DocumentsFragment"
         android:label="fragment_documents"
         tools:layout="@layout/fragment_documents" />
     <fragment
@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_rooms" />
     <fragment
         android:id="@+id/trashFragment"
-        android:name="com.example.onlyofficetest.presentation.main.TrashFragment"
+        android:name="com.example.onlyofficetest.presentation.main.trash.TrashFragment"
         android:label="fragment_trash"
         tools:layout="@layout/fragment_trash" />
     <fragment

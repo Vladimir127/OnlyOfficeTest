@@ -26,10 +26,12 @@ class WebRemoteRepositoryImpl(private val portalService: PortalService, private 
         return portalService.getProfileData(url).response.apply { avatar = baseUrl + avatar }
     }
 
-    override suspend fun getDocuments(): FilesResponse {
+    override suspend fun getDocuments(): List<FileListItem> {
         val baseUrl = baseUrlProvider.getBaseUrl()
         val url = baseUrl + "api/2.0/files/@my"
-        return portalService.getDocuments(url)
+        val response = portalService.getDocuments(url).response
+        val items = mergeFilesAndFolders(response.files, response.folders)
+        return items
     }
 
     override suspend fun getRooms(): List<FileListItem> {
@@ -40,10 +42,12 @@ class WebRemoteRepositoryImpl(private val portalService: PortalService, private 
         return items
     }
 
-    override suspend fun getTrash(): FilesResponse {
+    override suspend fun getTrash(): List<FileListItem> {
         val baseUrl = baseUrlProvider.getBaseUrl()
         val url = baseUrl + "api/2.0/files/@trash"
-        return portalService.getTrash(url)
+        val response = portalService.getTrash(url).response
+        val items = mergeFilesAndFolders(response.files, response.folders)
+        return items
     }
 
     override suspend fun logout() {
