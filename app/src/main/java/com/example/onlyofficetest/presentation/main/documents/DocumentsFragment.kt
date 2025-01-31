@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.onlyofficetest.databinding.FragmentDocumentsBinding
 import com.example.onlyofficetest.domain.models.FileListItem
+import com.example.onlyofficetest.domain.models.Folder
 import com.example.onlyofficetest.presentation.main.common.FileAdapter
 
 class DocumentsFragment : Fragment() {
@@ -32,8 +33,14 @@ class DocumentsFragment : Fragment() {
         viewModel = ViewModelProvider(this@DocumentsFragment)[DocumentsViewModel::class.java]
 
         fileAdapter = FileAdapter(requireContext())
-        binding.recyclerView.adapter = fileAdapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.adapter = fileAdapter
+
+        fileAdapter.onItemClickListener = { item ->
+            if (item is Folder) {
+                viewModel.onFolderSelected(item)
+            }
+        }
 
         viewModel.documents.observe(viewLifecycleOwner) { rooms ->
             showData(rooms)
@@ -45,6 +52,10 @@ class DocumentsFragment : Fragment() {
         showLoading()
         viewModel.loadDocuments()
 
+    }
+
+    fun handleBackPressed(): Boolean {
+       return viewModel.goBack()
     }
 
     private fun showLoading() {

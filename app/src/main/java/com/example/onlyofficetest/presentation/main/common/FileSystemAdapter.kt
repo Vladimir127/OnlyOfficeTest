@@ -16,7 +16,7 @@ import com.example.onlyofficetest.domain.models.Folder
 class FileAdapter(val context: Context) :
     RecyclerView.Adapter<FileAdapter.FileViewHolder>() {
 
-    var onItemClickListener: ((String) -> Unit)? = null
+    var onItemClickListener: ((FileListItem) -> Unit)? = null
 
     private var items: List<FileListItem> = emptyList()
 
@@ -48,7 +48,7 @@ class FileAdapter(val context: Context) :
 
         init {
             itemView.setOnClickListener {
-                onItemClickListener?.invoke(fileListItem.title)
+                onItemClickListener?.invoke(fileListItem)
             }
         }
 
@@ -60,7 +60,7 @@ class FileAdapter(val context: Context) :
             val imageResource = if (item is Folder) {
                 R.drawable.baseline_folder_open_white_24
             } else {
-                R.drawable.baseline_description_24
+                R.drawable.baseline_description_white_24
             }
 
             binding.iconImageView.setImageResource(imageResource)

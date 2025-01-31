@@ -34,6 +34,14 @@ class WebRemoteRepositoryImpl(private val portalService: PortalService, private 
         return items
     }
 
+    override suspend fun getDocumentsInFolder(folderId: String): List<FileListItem> {
+        val baseUrl = baseUrlProvider.getBaseUrl()
+        val url = baseUrl + "api/2.0/files/" + folderId
+        val response = portalService.getDocumentsInFolder(url).response
+        val items = mergeFilesAndFolders(response.files, response.folders)
+        return items
+    }
+
     override suspend fun getRooms(): List<FileListItem> {
         val baseUrl = baseUrlProvider.getBaseUrl()
         val url = baseUrl + "api/2.0/files/rooms"

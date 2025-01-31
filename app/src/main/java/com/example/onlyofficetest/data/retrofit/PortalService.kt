@@ -20,6 +20,9 @@ interface PortalService {
     suspend fun getDocuments(@Url url: String): FilesResponse
 
     @GET
+    suspend fun getDocumentsInFolder(@Url url: String): FilesResponse
+
+    @GET
     suspend fun getRooms(@Url url: String): FilesResponse
 
     @GET

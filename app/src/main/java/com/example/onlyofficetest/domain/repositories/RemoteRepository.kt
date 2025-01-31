@@ -11,6 +11,8 @@ interface RemoteRepository {
 
     suspend fun getDocuments(): List<FileListItem>
 
+    suspend fun getDocumentsInFolder(folderId: String): List<FileListItem>
+
     suspend fun getRooms(): List<FileListItem>
 
     suspend fun getTrash(): List<FileListItem>
