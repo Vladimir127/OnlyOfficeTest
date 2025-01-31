@@ -7,6 +7,19 @@
 
     <style name="Theme.OnlyOfficeTest" parent="Base.Theme.OnlyOfficeTest" />
 
+    <!-- Стиль NoActionBar наследует стиль AppTheme -->
+    <style name="Theme.OnlyOfficeTest.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="TextInputLayoutStyle" parent="Widget.Material3.TextInputLayout.FilledBox">
         <item name="android:layout_marginStart">@dimen/margin_default</item>
         <item name="android:layout_marginTop">@dimen/margin_default</item>

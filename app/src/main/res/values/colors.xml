@@ -4,4 +4,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#858688</color>
     <color name="red">#FF0000</color>
+    <color name="background_light">#FFFBFF</color>
+    <color name="edit_text_background">#edeaf3</color>
+    <color name="bottom_navigation_background">#f3edf7</color>
+    <color name="button_background">#7965ac</color>
 </resources>

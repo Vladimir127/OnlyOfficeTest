@@ -6,4 +6,6 @@
     <dimen name="title">16sp</dimen>
     <dimen name="margin_double">32dp</dimen>
     <dimen name="title1">32sp</dimen>
+    <dimen name="title2">24sp</dimen>
+    <dimen name="toolbar_height">90dp</dimen>
 </resources>
