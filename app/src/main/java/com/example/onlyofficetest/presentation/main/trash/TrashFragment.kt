@@ -9,14 +9,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.onlyofficetest.databinding.FragmentTrashBinding
 import com.example.onlyofficetest.domain.models.FileListItem
-import com.example.onlyofficetest.presentation.main.common.FileAdapter
 
 class TrashFragment : Fragment() {
     private var _binding: FragmentTrashBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var viewModel: TrashViewModel
-    private lateinit var fileAdapter: FileAdapter
+    private lateinit var adapter: TrashAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,8 +30,8 @@ class TrashFragment : Fragment() {
 
         viewModel = ViewModelProvider(this@TrashFragment)[TrashViewModel::class.java]
 
-        fileAdapter = FileAdapter(requireContext())
-        binding.recyclerView.adapter = fileAdapter
+        adapter = TrashAdapter(requireContext())
+        binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         viewModel.trash.observe(viewLifecycleOwner) { trash ->
@@ -57,7 +56,14 @@ class TrashFragment : Fragment() {
         binding.loadingLayout.visibility = View.INVISIBLE
         binding.dataLayout.visibility = View.VISIBLE
 
-        fileAdapter.setData(items)
+        if (items.isEmpty()) {
+            binding.recyclerView.visibility = View.INVISIBLE
+            binding.noDocumentsTextView.visibility = View.VISIBLE
+        } else {
+            binding.recyclerView.visibility = View.VISIBLE
+            binding.noDocumentsTextView.visibility = View.INVISIBLE
+            adapter.setData(items)
+        }
     }
 
     private fun showError() {

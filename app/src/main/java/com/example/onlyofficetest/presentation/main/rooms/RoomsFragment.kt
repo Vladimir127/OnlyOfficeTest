@@ -9,14 +9,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.onlyofficetest.databinding.FragmentRoomsBinding
 import com.example.onlyofficetest.domain.models.FileListItem
-import com.example.onlyofficetest.presentation.main.common.FileAdapter
 
 class RoomsFragment : Fragment() {
     private var _binding: FragmentRoomsBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var viewModel: RoomsViewModel
-    private lateinit var fileAdapter: FileAdapter
+    private lateinit var adapter: RoomsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,8 +30,8 @@ class RoomsFragment : Fragment() {
 
         viewModel = ViewModelProvider(this@RoomsFragment)[RoomsViewModel::class.java]
 
-        fileAdapter = FileAdapter(requireContext())
-        binding.recyclerView.adapter = fileAdapter
+        adapter = RoomsAdapter(requireContext())
+        binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         viewModel.rooms.observe(viewLifecycleOwner) { rooms ->
@@ -57,7 +56,14 @@ class RoomsFragment : Fragment() {
         binding.loadingLayout.visibility = View.INVISIBLE
         binding.dataLayout.visibility = View.VISIBLE
 
-        fileAdapter.setData(items)
+        if (items.isEmpty()) {
+            binding.recyclerView.visibility = View.INVISIBLE
+            binding.noDocumentsTextView.visibility = View.VISIBLE
+        } else {
+            binding.recyclerView.visibility = View.VISIBLE
+            binding.noDocumentsTextView.visibility = View.INVISIBLE
+            adapter.setData(items)
+        }
     }
 
     private fun showError() {

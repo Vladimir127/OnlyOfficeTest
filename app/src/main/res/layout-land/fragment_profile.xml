@@ -45,14 +45,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/email"
-                android:textSize="@dimen/title" />
+                android:textSize="@dimen/title3" />
 
             <TextView
                 android:id="@+id/email_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_default"
-                android:textSize="@dimen/title"
+                android:textSize="@dimen/title3"
                 tools:text="example@example.com" />
 
             <Button
@@ -90,7 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_default"
             android:text="@string/error"
-            android:textSize="@dimen/title" />
+            android:textSize="@dimen/title3" />
 
         <Button
             android:id="@+id/try_again_button"

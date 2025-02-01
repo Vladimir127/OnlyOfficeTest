@@ -1,4 +1,4 @@
-package com.example.onlyofficetest.presentation.main.common
+package com.example.onlyofficetest.presentation.main.rooms
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,15 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.onlyofficetest.R
 import com.example.onlyofficetest.databinding.ListItemBinding
 import com.example.onlyofficetest.domain.models.FileListItem
-import com.example.onlyofficetest.domain.models.Folder
 
 /**
- * Адаптер для списка файлов и папок. Используется в разделах "Documents", "Rooms" и "Trash"
+ * Адаптер для списка файлов и папок. Используется в разделе "Rooms"
+ * Все файлы и папки отображает с одной иконкой - иконкой раздела "Rooms"
+ * Не имеет обработчика нажатия на пункт списка
  */
-class FileAdapter(val context: Context) :
-    RecyclerView.Adapter<FileAdapter.FileViewHolder>() {
-
-    var onItemClickListener: ((FileListItem) -> Unit)? = null
+class RoomsAdapter(val context: Context) :
+    RecyclerView.Adapter<RoomsAdapter.FileViewHolder>() {
 
     private var items: List<FileListItem> = emptyList()
 
@@ -46,22 +45,12 @@ class FileAdapter(val context: Context) :
 
         private lateinit var fileListItem: FileListItem
 
-        init {
-            itemView.setOnClickListener {
-                onItemClickListener?.invoke(fileListItem)
-            }
-        }
-
         fun bind(item: FileListItem) {
             this.fileListItem = item
 
             binding.titleTextView.text = item.title
 
-            val imageResource = if (item is Folder) {
-                R.drawable.baseline_folder_open_white_24
-            } else {
-                R.drawable.baseline_description_white_24
-            }
+            val imageResource = R.drawable.baseline_dataset_white_24
 
             binding.iconImageView.setImageResource(imageResource)
         }

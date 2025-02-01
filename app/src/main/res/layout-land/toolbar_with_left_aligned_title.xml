@@ -19,7 +19,7 @@
         android:id="@+id/title_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/title"
+        android:textSize="@dimen/title3"
         android:textColor="@android:color/black"
         android:layout_marginStart="@dimen/margin_default"
         android:layout_gravity="center_vertical"/>

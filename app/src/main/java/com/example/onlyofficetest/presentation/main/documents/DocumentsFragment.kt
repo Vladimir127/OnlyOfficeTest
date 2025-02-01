@@ -11,14 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.onlyofficetest.databinding.FragmentDocumentsBinding
 import com.example.onlyofficetest.domain.models.FileListItem
 import com.example.onlyofficetest.domain.models.Folder
-import com.example.onlyofficetest.presentation.main.common.FileAdapter
 
 class DocumentsFragment : Fragment() {
     private var _binding: FragmentDocumentsBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var viewModel: DocumentsViewModel
-    private lateinit var fileAdapter: FileAdapter
+    private lateinit var adapter: DocumentsAdapter
 
     var title: String? = null
     private var folderId: String? = null
@@ -44,11 +43,11 @@ class DocumentsFragment : Fragment() {
 
         viewModel = ViewModelProvider(this@DocumentsFragment)[DocumentsViewModel::class.java]
 
-        fileAdapter = FileAdapter(requireContext())
+        adapter = DocumentsAdapter(requireContext())
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerView.adapter = fileAdapter
+        binding.recyclerView.adapter = adapter
 
-        fileAdapter.onItemClickListener = { item ->
+        adapter.onItemClickListener = { item ->
             if (item is Folder) {
                 val action = DocumentsFragmentDirections.actionDocumentsFragmentSelf(item.title, item.id)
                 findNavController(this).navigate(action)
@@ -85,7 +84,14 @@ class DocumentsFragment : Fragment() {
         binding.loadingLayout.visibility = View.INVISIBLE
         binding.dataLayout.visibility = View.VISIBLE
 
-        fileAdapter.setData(items)
+        if (items.isEmpty()) {
+            binding.recyclerView.visibility = View.INVISIBLE
+            binding.noDocumentsTextView.visibility = View.VISIBLE
+        } else {
+            binding.recyclerView.visibility = View.VISIBLE
+            binding.noDocumentsTextView.visibility = View.INVISIBLE
+            adapter.setData(items)
+        }
     }
 
     private fun showError() {

@@ -19,6 +19,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:listitem="@layout/list_item" />
+
+        <TextView
+            android:id="@+id/no_documents_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_documents_yet"
+            android:visibility="invisible"
+            android:textSize="@dimen/title3"
+            android:textColor="@color/grey"
+            android:layout_gravity="center"/>
     </FrameLayout>
 
     <FrameLayout
@@ -45,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/error"
-            android:textSize="@dimen/title"
+            android:textSize="@dimen/title3"
             android:layout_marginBottom="@dimen/margin_default"/>
 
         <Button
