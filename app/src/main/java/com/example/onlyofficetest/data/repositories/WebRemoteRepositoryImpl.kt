@@ -12,12 +12,15 @@ import com.example.onlyofficetest.domain.repositories.RemoteRepository
 
 class WebRemoteRepositoryImpl(private val portalService: PortalService, private val baseUrlProvider: BaseUrlProvider) : RemoteRepository {
     override suspend fun authorize(portal: String, email: String, password: String): AuthorizationResponse {
-        baseUrlProvider.setBaseUrl(portal)
+        val baseUrl = ensureTrailingSlash(portal)
+        baseUrlProvider.setBaseUrl(baseUrl)
 
-        val url = portal + "api/2.0/authentication"
+        val url = baseUrl + "api/2.0/authentication"
         val requestBody = AuthRequestBody(email, password)
         return portalService.getToken(url, requestBody)
     }
+
+    private fun ensureTrailingSlash(url: String): String = if (url.endsWith("/")) url else "$url/"
 
     override suspend fun getProfileData(): UserProfile {
         val baseUrl = baseUrlProvider.getBaseUrl()

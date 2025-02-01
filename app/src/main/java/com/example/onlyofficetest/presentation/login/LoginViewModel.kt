@@ -19,13 +19,17 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     @Inject
     lateinit var userDataRepository: UserDataRepository
 
-    private val _portalValid = MutableLiveData<Boolean>(true)
+    private var portal: String = ""
+    private var email: String = ""
+    private var password: String = ""
+
+    private val _portalValid = MutableLiveData<Boolean>()
     val portalValid: LiveData<Boolean> = _portalValid
 
-    private val _emailValid = MutableLiveData<Boolean>(true)
+    private val _emailValid = MutableLiveData<Boolean>()
     val emailValid: LiveData<Boolean> = _emailValid
 
-    private val _passwordValid = MutableLiveData<Boolean>(true)
+    private val _passwordValid = MutableLiveData<Boolean>()
     val passwordValid: LiveData<Boolean> = _passwordValid
 
     private val _loginButtonEnabled = MutableLiveData<Boolean>().apply { value = false }
@@ -41,25 +45,28 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         (application as MyApp).appComponent.inject(this)
     }
 
-    fun validatePortal(name: String) {
-        _portalValid.value = name.isNotEmpty() && Patterns.WEB_URL.matcher(name).matches()
+    fun validatePortal(portal: String) {
+        this.portal = portal
+        _portalValid.value = Patterns.WEB_URL.matcher(portal).matches()
         checkFieldsValidity()
     }
 
-    fun validateEmail(name: String) {
-        _emailValid.value = name.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(name).matches()
+    fun validateEmail(email: String) {
+        this.email = email
+        _emailValid.value = Patterns.EMAIL_ADDRESS.matcher(email).matches()
         checkFieldsValidity()
     }
 
-    fun validatePassword(name: String) {
-        _passwordValid.value = name.isNotEmpty()
+    fun validatePassword(password: String) {
+        this.password = password
+        _passwordValid.value = true
         checkFieldsValidity()
     }
 
     private fun checkFieldsValidity() {
-        val isPortalValid = _portalValid.value ?: false
-        val isEmailValid = _emailValid.value ?: false
-        val isPasswordValid = _passwordValid.value ?: false
+        val isPortalValid = portal.isNotEmpty() && _portalValid.value ?: false
+        val isEmailValid = email.isNotEmpty() && _emailValid.value ?: false
+        val isPasswordValid = password.isNotEmpty() && _passwordValid.value ?: false
         _loginButtonEnabled.value = isPortalValid && isEmailValid && isPasswordValid
     }
 
