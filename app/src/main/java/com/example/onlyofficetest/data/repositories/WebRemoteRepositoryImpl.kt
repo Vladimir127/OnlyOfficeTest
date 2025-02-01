@@ -6,7 +6,6 @@ import com.example.onlyofficetest.domain.models.AuthRequestBody
 import com.example.onlyofficetest.domain.models.AuthorizationResponse
 import com.example.onlyofficetest.domain.models.File
 import com.example.onlyofficetest.domain.models.FileListItem
-import com.example.onlyofficetest.domain.models.FilesResponse
 import com.example.onlyofficetest.domain.models.Folder
 import com.example.onlyofficetest.domain.models.UserProfile
 import com.example.onlyofficetest.domain.repositories.RemoteRepository
@@ -64,7 +63,7 @@ class WebRemoteRepositoryImpl(private val portalService: PortalService, private 
         portalService.logout(url)
     }
 
-    fun mergeFilesAndFolders(files: List<File>, folders: List<Folder>): List<FileListItem> {
+    private fun mergeFilesAndFolders(files: List<File>, folders: List<Folder>): List<FileListItem> {
         val items = mutableListOf<FileListItem>()
         items.addAll(folders)
         items.addAll(files)

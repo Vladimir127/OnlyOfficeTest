@@ -19,11 +19,16 @@ class DocumentsFragment : Fragment() {
     private lateinit var viewModel: DocumentsViewModel
     private lateinit var adapter: DocumentsAdapter
 
+    /** Имя папки, открытой в данный момент. Используется для отображения на Toolbar в MainActivity */
     var title: String? = null
+
+    /** ID папки, открытой в данный момент. Используется при запросе содержимого папки */
     private var folderId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Получаем имя и ID папки из аргументов
         arguments?.let {
             title = it.getString(ARG_PARAM1)
             folderId = it.getString(ARG_PARAM2)
@@ -47,6 +52,9 @@ class DocumentsFragment : Fragment() {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
 
+        // При нажатии на пункт списка проверяем, является ли выбранный пункт папкой.
+        // Если является, переходим к новому экземпляру этого же фрагмента,
+        // передавая в качестве аргументов имя и ID папки
         adapter.onItemClickListener = { item ->
             if (item is Folder) {
                 val action = DocumentsFragmentDirections.actionDocumentsFragmentSelf(item.title, item.id)
@@ -66,6 +74,9 @@ class DocumentsFragment : Fragment() {
 
     private fun loadDocuments(){
         showLoading()
+
+        // Если ID папки отсутствует, значит, это корневая папка, и необходимо выполнить запрос без ID.
+        // В противном случае получаем содержимое конкретной папки по её ID
         if (folderId == null) {
             viewModel.loadDocuments()
         } else {
@@ -84,6 +95,7 @@ class DocumentsFragment : Fragment() {
         binding.loadingLayout.visibility = View.INVISIBLE
         binding.dataLayout.visibility = View.VISIBLE
 
+        // Если список пустой, показываем вью-холдер
         if (items.isEmpty()) {
             binding.recyclerView.visibility = View.INVISIBLE
             binding.noDocumentsTextView.visibility = View.VISIBLE

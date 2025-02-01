@@ -9,6 +9,9 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Url
 
+/**
+ * Интерфейс для доступа к эндпоинтам сервера с помощью Retrofit
+ */
 interface PortalService {
     @POST
     suspend fun getToken(@Url url: String, @Body requestBody: AuthRequestBody): AuthorizationResponse

@@ -6,6 +6,10 @@ import com.example.onlyofficetest.di.DaggerAppComponent
 import com.example.onlyofficetest.di.NetworkModule
 import com.example.onlyofficetest.di.SettingsModule
 
+/**
+ * Основной класс приложения, который расширяет [Application].
+ * Ответственен за инициализацию компонентов зависимости и настройку сервисов
+ */
 class MyApp : Application() {
 
     val appComponent: AppComponent by lazy {

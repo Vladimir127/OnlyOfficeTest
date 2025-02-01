@@ -4,6 +4,9 @@ import com.example.onlyofficetest.domain.models.AuthorizationResponse
 import com.example.onlyofficetest.domain.models.FileListItem
 import com.example.onlyofficetest.domain.models.UserProfile
 
+/**
+ * Репозиторий для работы с данными на сервере
+ */
 interface RemoteRepository {
     suspend fun authorize(portal: String, email: String, password: String): AuthorizationResponse
 

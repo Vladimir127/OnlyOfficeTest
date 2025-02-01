@@ -56,6 +56,7 @@ class RoomsFragment : Fragment() {
         binding.loadingLayout.visibility = View.INVISIBLE
         binding.dataLayout.visibility = View.VISIBLE
 
+        // Если список пустой, показываем вью-холдер
         if (items.isEmpty()) {
             binding.recyclerView.visibility = View.INVISIBLE
             binding.noDocumentsTextView.visibility = View.VISIBLE
