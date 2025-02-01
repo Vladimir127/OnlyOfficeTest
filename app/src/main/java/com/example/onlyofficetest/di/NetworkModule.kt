@@ -1,6 +1,5 @@
 package com.example.onlyofficetest.di
 
-import android.content.Context
 import com.example.onlyofficetest.data.repositories.WebRemoteRepositoryImpl
 import com.example.onlyofficetest.data.retrofit.AuthInterceptor
 import com.example.onlyofficetest.data.retrofit.BaseUrlProvider
@@ -18,6 +17,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 private const val BASE_URL = "https://testdocspaceportal.onlyoffice.com/"
 
+/**
+ * Модуль, отвечающий за предоставление зависимостей для работы с сетью с помощью Retrofit
+ */
 @Module
 class NetworkModule {
     @Provides

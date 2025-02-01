@@ -7,6 +7,9 @@ import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.Toolbar
 import com.example.onlyofficetest.R
 
+/**
+ * Кастомный Toolbar с заголовком, расположенным под кнопкой "Назад"
+ */
 class LeftAlignedTitleToolbar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
