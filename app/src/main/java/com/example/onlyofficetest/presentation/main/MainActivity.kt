@@ -3,6 +3,7 @@ package com.example.onlyofficetest.presentation.main
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
+import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -49,20 +50,32 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.let { actionBar ->
             actionBar.title = resources.getString(R.string.documents)
         }
+
+        binding.toolbar.findViewById<ImageButton>(R.id.back_button).setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun initNavigation() {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navController)
+        binding.bottomNavigationView.setOnApplyWindowInsetsListener(null)
 
         // В зависимости от фрагмента, к которому мы переходим. настраиваем внешний вид кастомного Toolbar:
         // видимость кнопки "Назад", выравнивание и текст заголовка
-        navController.addOnDestinationChangedListener { _, destination, _ ->
+        navController.addOnDestinationChangedListener { _, destination, arguments ->
             when (destination.id) {
                 R.id.documentsFragment -> {
-                    binding.toolbar.backButton?.visibility = View.VISIBLE
-                    binding.toolbar.titleTextView?.gravity = Gravity.START
+                    binding.toolbar.backButton?.visibility = View.INVISIBLE
                     supportActionBar?.title = resources.getString(R.string.documents)
+
+                    arguments?.let {
+                        val title = arguments.getString(DocumentsFragment.ARG_PARAM1)
+                        if (title != null) {
+                            binding.toolbar.backButton.visibility = View.VISIBLE
+                            supportActionBar?.title = title
+                        }
+                    }
                 }
 
                 R.id.roomsFragment -> {
@@ -87,25 +100,6 @@ class MainActivity : AppCompatActivity() {
                     supportActionBar?.title = ""
                 }
             }
-        }
-    }
-
-    override fun onBackPressed() {
-        // Извлекаем текущий фрагмент с NavController
-        val currentDestination = navController.currentDestination
-
-        if (currentDestination?.id == R.id.documentsFragment) {
-            // Получаем ViewModel из фрагмента
-            val fragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)?.childFragmentManager?.fragments?.find { it is DocumentsFragment } as? DocumentsFragment
-
-            fragment?.let {
-                if (!fragment.handleBackPressed()) {
-                    super.onBackPressed()
-                }
-            }
-        } else {
-            // Если текущий фрагмент - не DocumentsFragment, используем стандартное поведение
-            super.onBackPressed()
         }
     }
 }

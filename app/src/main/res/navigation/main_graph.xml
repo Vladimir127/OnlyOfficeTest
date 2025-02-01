@@ -9,7 +9,17 @@
         android:id="@+id/documentsFragment"
         android:name="com.example.onlyofficetest.presentation.main.documents.DocumentsFragment"
         android:label="fragment_documents"
-        tools:layout="@layout/fragment_documents" />
+        tools:layout="@layout/fragment_documents" >
+        <action
+            android:id="@+id/action_documentsFragment_self"
+            app:destination="@id/documentsFragment" />
+        <argument
+            android:name="folderName"
+            app:argType="string" />
+        <argument
+            android:name="folderId"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/roomsFragment"
         android:name="com.example.onlyofficetest.presentation.main.rooms.RoomsFragment"

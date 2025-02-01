@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.onlyofficetest.databinding.FragmentDocumentsBinding
 import com.example.onlyofficetest.domain.models.FileListItem
@@ -18,6 +19,17 @@ class DocumentsFragment : Fragment() {
 
     private lateinit var viewModel: DocumentsViewModel
     private lateinit var fileAdapter: FileAdapter
+
+    var title: String? = null
+    private var folderId: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            title = it.getString(ARG_PARAM1)
+            folderId = it.getString(ARG_PARAM2)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,24 +50,28 @@ class DocumentsFragment : Fragment() {
 
         fileAdapter.onItemClickListener = { item ->
             if (item is Folder) {
-                viewModel.onFolderSelected(item)
+                val action = DocumentsFragmentDirections.actionDocumentsFragmentSelf(item.title, item.id)
+                findNavController(this).navigate(action)
             }
         }
 
-        viewModel.documents.observe(viewLifecycleOwner) { rooms ->
-            showData(rooms)
+        viewModel.documents.observe(viewLifecycleOwner) { documents ->
+            showData(documents)
         }
         viewModel.error.observe(viewLifecycleOwner) {
             showError()
         }
 
-        showLoading()
-        viewModel.loadDocuments()
-
+        loadDocuments()
     }
 
-    fun handleBackPressed(): Boolean {
-       return viewModel.goBack()
+    private fun loadDocuments(){
+        showLoading()
+        if (folderId == null) {
+            viewModel.loadDocuments()
+        } else {
+            viewModel.loadDocuments(folderId!!)
+        }
     }
 
     private fun showLoading() {
@@ -78,13 +94,17 @@ class DocumentsFragment : Fragment() {
         binding.dataLayout.visibility = View.INVISIBLE
 
         binding.tryAgainButton.setOnClickListener {
-            showLoading()
-            viewModel.loadDocuments()
+            loadDocuments()
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val ARG_PARAM1 = "folderName"
+        private const val ARG_PARAM2 = "folderId"
     }
 }
